@@ -12,7 +12,7 @@ namespace Jangine
     public:
         T x, y;
 
-        Vec2() = default;
+        Vec2() : Vec2{ T{}, T{} } {}
         Vec2(T nx, T ny) : x{ nx }, y{ ny } {}
 
         Vec2& operator+=(const Vec2& rhs) noexcept
@@ -56,7 +56,7 @@ namespace Jangine
     };
 
     template <typename T>
-    Vec2<T> operator+(const Vec2<T>& lhs, const Vector2& rhs)
+    Vec2<T> operator+(const Vec2<T>& lhs, const Vec2<T>& rhs)
     {
         auto ret = lhs;
         ret += rhs;
@@ -64,7 +64,7 @@ namespace Jangine
     }
 
     template <typename T>
-    Vec2<T> operator-(const Vec2<T>& lhs, const Vector2& rhs) { return lhs + -rhs; }
+    Vec2<T> operator-(const Vec2<T>& lhs, const Vec2<T>& rhs) { return lhs + -rhs; }
 
     template <typename T>
     Vec2<T> operator*(const Vec2<T>& lhs, T rhs)
