@@ -4,6 +4,7 @@ on: [push, workflow_dispatch]
 
 jobs:
     test-workflow:
+        runs-on: [windows-latest, ubuntu-latest]
         steps:
             - uses: actions/checkout@v2
             - run: echo "Hello build workflow"
