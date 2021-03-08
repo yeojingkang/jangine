@@ -1,0 +1,9 @@
+name: Build
+
+on: [push, workflow_dispatch]
+
+jobs:
+    test-workflow:
+        steps:
+            - uses: actions/checkout@v2
+            - run: echo "Hello build workflow"
