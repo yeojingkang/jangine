@@ -11,6 +11,12 @@ namespace jg
     {
         T data[N];
 
+        explicit constexpr Vec(const T& val = T{})
+        {
+            for (auto i = 0; i < N; ++i)
+                data[i] = val;
+        }
+
         T& operator[](size_t index)
         {
             assert(index < N);
@@ -61,19 +67,19 @@ namespace jg
     }
 
     template <typename T, size_t N>
-    T LengthSq(const Vec<T, N>& vec)
+    T Dot(const Vec<T, N>& lhs, const Vec<T, N>& rhs)
     {
-        auto ret = vec.data[0] * vec.data[0];
-        for (auto i = 1; i < N; ++i)
-            ret += vec.data[i] * vec.data[i];
+        auto ret = lhs.data[0] * rhs.data[0];
+        for (auto i = 0; i < N; ++i)
+            ret += lhs.data[i] * rhs.data[i];
         return ret;
     }
 
     template <typename T, size_t N>
-    T Length(const Vec<T, N>& vec)
-    {
-        return std::sqrt(LengthSq(vec));
-    }
+    T LengthSq(const Vec<T, N>& vec) { return Dot(vec, vec); }
+
+    template <typename T, size_t N>
+    T Length(const Vec<T, N>& vec) { return std::sqrt(LengthSq(vec)); }
 
     template <typename T>
     struct Vec<T, 2>
@@ -84,6 +90,52 @@ namespace jg
             struct { T x, y; };
             struct { T u, v; };
         };
+
+        explicit constexpr Vec(const T& val = T{}) : x{ val }, y{ val } {}
+
+        T& operator[](size_t index)
+        {
+            assert(index < 2);
+            return data[index];
+        }
+    };
+
+    template <typename T>
+    struct Vec<T, 3>
+    {
+        union
+        {
+            T data[3];
+            struct { T x, y, z; };
+            struct { T u, v, w; };
+            struct { T r, g, b; };
+            Vec<T, 2> xy;
+            Vec<T, 2> uv;
+        };
+
+        explicit constexpr Vec(const T& val = T{}) : x{ val }, y{ val }, z{ val } {}
+
+        T& operator[](size_t index)
+        {
+            assert(index < 3);
+            return data[index];
+        }
+    };
+
+    template <typename T>
+    struct Vec<T, 4>
+    {
+        union
+        {
+            T data[4];
+            struct { T x, y, z, w; };
+            struct { T r, g, b, a; };
+            Vec<T, 2> xy;
+            Vec<T, 3> xyz;
+            Vec<T, 3> rgb;
+        };
+
+        explicit constexpr Vec(const T& val = T{}) : x{ val }, y{ val }, z{ val }, w{ val } {}
 
         T& operator[](size_t index)
         {

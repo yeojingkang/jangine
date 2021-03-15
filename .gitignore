@@ -33,3 +33,5 @@
 
 # Vim files
 *.swp
+
+compile_commands.json
