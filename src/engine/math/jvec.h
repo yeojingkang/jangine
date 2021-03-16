@@ -92,6 +92,7 @@ namespace jg
         };
 
         explicit constexpr Vec(const T& val = T{}) : x{ val }, y{ val } {}
+        explicit constexpr Vec(const T& nx, const T& ny) : x{ nx }, y{ ny } {}
 
         T& operator[](size_t index)
         {
@@ -114,6 +115,7 @@ namespace jg
         };
 
         explicit constexpr Vec(const T& val = T{}) : x{ val }, y{ val }, z{ val } {}
+        explicit constexpr Vec(const T& nx, const T& ny, const T& nz) : x{ nx }, y{ ny }, z{ nz } {}
 
         T& operator[](size_t index)
         {
@@ -136,6 +138,7 @@ namespace jg
         };
 
         explicit constexpr Vec(const T& val = T{}) : x{ val }, y{ val }, z{ val }, w{ val } {}
+        explicit constexpr Vec(const T& nx, const T& ny, const T& nz, const T& nw) : x{ nx }, y{ ny }, z{ nz }, w{ nw } {}
 
         T& operator[](size_t index)
         {
@@ -146,6 +149,8 @@ namespace jg
 
     // Aliases
     using Vec2f = Vec<float, 2>;
+    using Vec3f = Vec<float, 3>;
+    using Vec4f = Vec<float, 4>;
 }
 
 #endif // J_VEC_H

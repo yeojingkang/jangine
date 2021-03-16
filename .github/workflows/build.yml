@@ -11,4 +11,16 @@ jobs:
 
         steps:
             - uses: actions/checkout@v2
-            - run: echo "Hello build workflow"
+
+            - name: Build project
+              run: |
+                mkdir build
+                cd build
+                cmake --version
+                cmake ..
+                cmake --build .
+
+            - name: Run unit tests
+              run: |
+                cd build
+                ./UnitTest

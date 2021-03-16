@@ -7,6 +7,9 @@ project(Jangine)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# Add Jangine library
+add_subdirectory(src/engine)
+
 find_package(GTest)
 
 if(NOT(GTest_FOUND))
@@ -39,3 +42,8 @@ if(NOT(GTest_FOUND))
         EXCLUDE_FROM_ALL
     )
 endif()
+
+# Add unit tests
+add_executable(UnitTest src/test/test.cpp)
+target_link_libraries(UnitTest PUBLIC gtest_main jangine)
+add_test(NAME Unit_Test COMMAND UnitTest)
