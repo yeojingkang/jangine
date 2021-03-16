@@ -8,9 +8,6 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest, windows-latest]
-                include:
-                  - os: windows-latest
-                    opt_action: dir
 
         steps:
             - uses: actions/checkout@v2
@@ -25,6 +22,6 @@ jobs:
 
             - name: Run unit tests
               run: |
-                ${{ matrix.opt_action }}
                 cd build
+                cmake --build .
                 ./UnitTest
