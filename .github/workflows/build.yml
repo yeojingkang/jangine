@@ -8,6 +8,9 @@ jobs:
         strategy:
             matrix:
                 os: [ubuntu-latest, windows-latest]
+                include:
+                  - os: windows-latest
+                    exe-dir: Debug/
 
         steps:
             - uses: actions/checkout@v2
@@ -24,4 +27,4 @@ jobs:
               run: |
                 cd build
                 cmake --build .
-                ./UnitTest
+                ./${{ matrix.exe-dir }}UnitTest
