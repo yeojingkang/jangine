@@ -27,5 +27,5 @@ jobs:
               run: |
                 cd build
                 cmake --build .
-                ctest -VV
+                ctest -VV -C Debug
                 #./${{ matrix.exe-dir }}UnitTest
