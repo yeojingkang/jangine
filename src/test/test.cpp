@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "math/jvec.h"
+#include "jangine.h"
 
 TEST(Math, Vector)
 {

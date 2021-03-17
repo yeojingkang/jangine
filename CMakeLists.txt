@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Set the project name
-project(Jangine)
+project(jangine)
 
 # Specify the C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -44,6 +44,7 @@ if(NOT(GTest_FOUND))
 endif()
 
 # Add unit tests
+enable_testing()
 add_executable(UnitTest src/test/test.cpp)
 target_link_libraries(UnitTest PUBLIC gtest_main jangine)
 add_test(NAME Unit_Test COMMAND UnitTest)
