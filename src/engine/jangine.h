@@ -1,6 +1,6 @@
 #ifndef JANGINE_H
 #define JANGINE_H
 
-#include "math/jvec.h"
+#include "math/jmath.h"
 
 #endif // JANGINE_H
