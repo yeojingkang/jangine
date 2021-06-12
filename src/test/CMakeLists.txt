@@ -8,6 +8,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add the executable
-add_executable(Test test.cpp)
+#add_executable(Test test_math.cpp)
 
 target_include_directories(Test PUBLIC ../engine/)

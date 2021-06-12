@@ -45,6 +45,6 @@ endif()
 
 # Add unit tests
 enable_testing()
-add_executable(UnitTest src/test/test.cpp)
+add_executable(UnitTest src/test/test_math.cpp)
 target_link_libraries(UnitTest PUBLIC gtest_main jangine)
 add_test(NAME Unit_Test COMMAND UnitTest)
