@@ -2,17 +2,37 @@
 
 #include "jangine.h"
 
-TEST(Math, Vector)
+class Vec2Test : public ::testing::Test
 {
-    jg::Vec2f v2a;
-    EXPECT_FLOAT_EQ(v2a.x, 0.0f);
-    EXPECT_FLOAT_EQ(v2a.y, 0.0f);
+protected:
+    void SetUp() override
+    {
+    }
 
-    jg::Vec2f v2b{ 2.0f };
-    EXPECT_FLOAT_EQ(v2b.x, 2.0f);
-    EXPECT_FLOAT_EQ(v2b.y, 2.0f);
+    jg::Vec2f v1;
+    jg::Vec2f v2{ 2.0f };
+    jg::Vec2f v3{ 5.0f, -1.0f };
+};
 
-    jg::Vec2f v2c{ 5.0f, -1.0f };
-    EXPECT_FLOAT_EQ(v2c.x, 5.0f);
-    EXPECT_FLOAT_EQ(v2c.y, -1.0f);
+TEST_F(Vec2Test, InitialValues)
+{
+    EXPECT_FLOAT_EQ(v1.x, 0.0f);
+    EXPECT_FLOAT_EQ(v1.y, 0.0f);
+
+    EXPECT_FLOAT_EQ(v2.x, 2.0f);
+    EXPECT_FLOAT_EQ(v2.y, 2.0f);
+
+    EXPECT_FLOAT_EQ(v3.x, 5.0f);
+    EXPECT_FLOAT_EQ(v3.y, -1.0f);
+}
+
+TEST_F(Vec2Test, Add)
+{
+    auto out = v1 + v2;
+    EXPECT_FLOAT_EQ(out.x, 2.0f);
+    EXPECT_FLOAT_EQ(out.y, 2.0f);
+
+    out = v2 + v3;
+    EXPECT_FLOAT_EQ(out.x, 7.0f);
+    EXPECT_FLOAT_EQ(out.y, 1.0f);
 }

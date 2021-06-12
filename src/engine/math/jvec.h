@@ -81,6 +81,20 @@ namespace jg
     template <typename T, size_t N>
     T Length(const Vec<T, N>& vec) { return std::sqrt(LengthSq(vec)); }
 
+    template <typename T, size_t N>
+    Vec<T, N> Normalize(const Vec<T, N>& vec)
+    {
+        auto ret = vec;
+        const auto len = Length(ret);
+
+        for (auto& val : ret.data)
+            val /= len;
+
+        return ret;
+    }
+
+
+
     template <typename T>
     struct Vec<T, 2>
     {
@@ -100,6 +114,8 @@ namespace jg
             return data[index];
         }
     };
+
+
 
     template <typename T>
     struct Vec<T, 3>
@@ -125,6 +141,18 @@ namespace jg
     };
 
     template <typename T>
+    Vec<T, 3> Cross(const Vec<T, 3>& lhs, const Vec<T, 3>& rhs)
+    {
+        return Vec<T, 3>{
+            lhs.y * rhs.z - lhs.z * rhs.y,
+            lhs.z * rhs.x - lhs.x * rhs.z,
+            lhs.x * rhs.y - lhs.y * rhs.x
+        };
+    }
+
+
+
+    template <typename T>
     struct Vec<T, 4>
     {
         union
@@ -142,10 +170,12 @@ namespace jg
 
         T& operator[](size_t index)
         {
-            assert(index < 2);
+            assert(index < 4);
             return data[index];
         }
     };
+
+
 
     // Aliases
     using Vec2f = Vec<float, 2>;
