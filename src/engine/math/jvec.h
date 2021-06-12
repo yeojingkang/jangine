@@ -69,7 +69,7 @@ namespace jg
     template <typename T, size_t N>
     T Dot(const Vec<T, N>& lhs, const Vec<T, N>& rhs)
     {
-        auto ret = lhs.data[0] * rhs.data[0];
+        auto ret = T{};
         for (auto i = 0; i < N; ++i)
             ret += lhs.data[i] * rhs.data[i];
         return ret;
@@ -82,16 +82,7 @@ namespace jg
     T Length(const Vec<T, N>& vec) { return std::sqrt(LengthSq(vec)); }
 
     template <typename T, size_t N>
-    Vec<T, N> Normalize(const Vec<T, N>& vec)
-    {
-        auto ret = vec;
-        const auto len = Length(ret);
-
-        for (auto& val : ret.data)
-            val /= len;
-
-        return ret;
-    }
+    Vec<T, N> Normalize(const Vec<T, N>& vec) { return vec / Length(vec); }
 
 
 
