@@ -2,6 +2,8 @@
 
 #include "jangine.h"
 
+// TODO: Add unit tests for non-specialized vector sizes
+
 class Vec2 : public ::testing::Test
 {
 protected:
@@ -19,11 +21,11 @@ protected:
 
 TEST_F(Vec2, Constructors)
 {
-    jg::Vec2f a;
+    constexpr jg::Vec2f a;
     EXPECT_FLOAT_EQ(a.x, 0.0f);
     EXPECT_FLOAT_EQ(a.y, 0.0f);
 
-    jg::Vec2f b{ 1.0f };
+    constexpr jg::Vec2f b{ 1.0f };
     EXPECT_FLOAT_EQ(b.x, 1.0f);
     EXPECT_FLOAT_EQ(b.y, 1.0f);
 
@@ -34,8 +36,13 @@ TEST_F(Vec2, Constructors)
 
 TEST_F(Vec2, BasicOperations)
 {
+    // Negate
+    auto out = -v2;
+    EXPECT_FLOAT_EQ(out.x, -2.0f);
+    EXPECT_FLOAT_EQ(out.y, -2.0f);
+
     // Add
-    auto out = v1 + v2;
+    out = v1 + v2;
     EXPECT_FLOAT_EQ(out.x, 2.0f);
     EXPECT_FLOAT_EQ(out.y, 2.0f);
 
@@ -114,12 +121,12 @@ protected:
 
 TEST_F(Vec3, Constructor)
 {
-    jg::Vec3f a;
+    constexpr jg::Vec3f a;
     EXPECT_FLOAT_EQ(a.x, 0.0f);
     EXPECT_FLOAT_EQ(a.y, 0.0f);
     EXPECT_FLOAT_EQ(a.z, 0.0f);
 
-    jg::Vec3f b{ 1.0f };
+    constexpr jg::Vec3f b{ 1.0f };
     EXPECT_FLOAT_EQ(b.x, 1.0f);
     EXPECT_FLOAT_EQ(b.y, 1.0f);
     EXPECT_FLOAT_EQ(b.z, 1.0f);
@@ -132,8 +139,14 @@ TEST_F(Vec3, Constructor)
 
 TEST_F(Vec3, BasicOperations)
 {
+    // Negate
+    auto out = -v2;
+    EXPECT_FLOAT_EQ(out.x, -2.0f);
+    EXPECT_FLOAT_EQ(out.y, -2.0f);
+    EXPECT_FLOAT_EQ(out.z, -2.0f);
+
     // Add
-    auto out = v1 + v2;
+    out = v1 + v2;
     EXPECT_FLOAT_EQ(out.x, 2.0f);
     EXPECT_FLOAT_EQ(out.y, 2.0f);
     EXPECT_FLOAT_EQ(out.z, 2.0f);
@@ -235,13 +248,13 @@ protected:
 
 TEST_F(Vec4, Constructors)
 {
-    jg::Vec4f a;
+    constexpr jg::Vec4f a;
     EXPECT_FLOAT_EQ(a.x, 0.0f);
     EXPECT_FLOAT_EQ(a.y, 0.0f);
     EXPECT_FLOAT_EQ(a.z, 0.0f);
     EXPECT_FLOAT_EQ(a.w, 0.0f);
 
-    jg::Vec4f b{ 1.0f };
+    constexpr jg::Vec4f b{ 1.0f };
     EXPECT_FLOAT_EQ(b.x, 1.0f);
     EXPECT_FLOAT_EQ(b.y, 1.0f);
     EXPECT_FLOAT_EQ(b.z, 1.0f);
@@ -256,8 +269,15 @@ TEST_F(Vec4, Constructors)
 
 TEST_F(Vec4, BasicOperations)
 {
+    // Negate
+    auto out = -v2;
+    EXPECT_FLOAT_EQ(out.x, -2.0f);
+    EXPECT_FLOAT_EQ(out.y, -2.0f);
+    EXPECT_FLOAT_EQ(out.z, -2.0f);
+    EXPECT_FLOAT_EQ(out.w, -2.0f);
+
     // Add
-    auto out = v1 + v2;
+    out = v1 + v2;
     EXPECT_FLOAT_EQ(out.x, 2.0f);
     EXPECT_FLOAT_EQ(out.y, 2.0f);
     EXPECT_FLOAT_EQ(out.z, 2.0f);
