@@ -22,6 +22,19 @@ namespace jg
             assert(index < N);
             return data[index];
         }
+        const T& operator[](size_t index) const
+        {
+            assert(index < N);
+            return data[index];
+        }
+
+        Vec operator-() const
+        {
+            auto out = *this;
+            for (auto i = 0; i < N; ++i)
+                out.data[i] = -out.data[i];
+            return out;
+        }
     };
 
     template <typename T, size_t N>
@@ -36,10 +49,7 @@ namespace jg
     template <typename T, size_t N>
     Vec<T, N> operator-(const Vec<T, N>& lhs, const Vec<T, N>& rhs)
     {
-        auto ret = lhs;
-        for (auto i = 0; i < N; ++i)
-            ret.data[i] -= rhs.data[i];
-        return ret;
+        return lhs + -rhs;
     }
 
     template <typename T, size_t N>
@@ -104,6 +114,13 @@ namespace jg
             assert(index < 2);
             return data[index];
         }
+        const T& operator[](size_t index) const
+        {
+            assert(index < 2);
+            return data[index];
+        }
+
+        Vec operator-() const { return Vec{ -x, -y }; }
     };
 
 
@@ -129,6 +146,13 @@ namespace jg
             assert(index < 3);
             return data[index];
         }
+        const T& operator[](size_t index) const
+        {
+            assert(index < 3);
+            return data[index];
+        }
+
+        Vec operator-() const { return Vec{ -x, -y, -z }; }
     };
 
     template <typename T>
@@ -164,6 +188,13 @@ namespace jg
             assert(index < 4);
             return data[index];
         }
+        const T& operator[](size_t index) const
+        {
+            assert(index < 4);
+            return data[index];
+        }
+
+        Vec operator-() const { return Vec{ -x, -y, -z, -w }; }
     };
 
 

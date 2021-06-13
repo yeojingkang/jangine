@@ -47,6 +47,7 @@ endif()
 enable_testing()
 add_executable(UnitTest
     src/test/vector_test.cpp 
+    src/test/matrix_test.cpp 
 )
 target_link_libraries(UnitTest PUBLIC gtest_main jangine)
 add_test(NAME Unit_Test COMMAND UnitTest)
