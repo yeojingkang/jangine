@@ -33,3 +33,12 @@
 
 # Vim files
 *.swp
+
+compile_commands.json
+
+build/
+
+# Environment specific files
+CMakeSettings.json
+.vscode/
+.vs/
