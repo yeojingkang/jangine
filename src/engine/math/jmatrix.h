@@ -14,7 +14,7 @@ namespace jg
         union
         {
             std::array<T, M * N> data;
-            Vec<T, M> col[N];
+            std::array<Vec<T, M>, N> col;
         };
 
         constexpr Mat() : data{} {}
@@ -77,6 +77,89 @@ namespace jg
                 out[i] += lhs[j][i] * rhs[j];
         return out;
     }
+
+    template <typename T, size_t M>
+    Mat<T, M, M> Transpose(const Mat<T, M, M>& mat)
+    {
+        auto transposed = mat;
+        for (auto i = 0; i < M; ++i)
+            for (auto j = i + 1; j < M; ++j)
+                std::swap(transposed[i][j], transposed[j][i]);
+        return transposed;
+    }
+
+    template <typename T>
+    struct Mat<T, 3, 3>
+    {
+        union
+        {
+            std::array<T, 9> data;
+            std::array<Vec<T, 3>, 3> col;
+        };
+
+        static constexpr Mat<T, 3, 3> Identity()
+        {
+            return Mat<T, 3, 3>{
+                static_cast<T>(1), static_cast<T>(0), static_cast<T>(0),
+                static_cast<T>(0), static_cast<T>(1), static_cast<T>(0),
+                static_cast<T>(0), static_cast<T>(0), static_cast<T>(1)
+            };
+        }
+        static constexpr Mat<T, 3, 3> Translation(const T& x, const T& y)
+        {
+            return Mat<T, 3, 3>{
+                static_cast<T>(1), static_cast<T>(0), static_cast<T>(0),
+                static_cast<T>(0), static_cast<T>(1), static_cast<T>(0),
+                                x,                 y, static_cast<T>(1)
+            };
+        }
+        static constexpr Mat<T, 3, 3> Scale(const T& x, const T& y)
+        {
+            return Mat<T, 3, 3>{
+                                x, static_cast<T>(0), static_cast<T>(0),
+                static_cast<T>(0),                 y, static_cast<T>(0),
+                static_cast<T>(0), static_cast<T>(0), static_cast<T>(1)
+            };
+        }
+
+        explicit constexpr Mat() : data{} {}
+        explicit constexpr Mat(const T& x0, const T& y0, const T& z0,
+                               const T& x1, const T& y1, const T& z1,
+                               const T& x2, const T& y2, const T& z2) :
+            data{ x0, y0, z0,
+                  x1, y1, z1,
+                  x2, y2, z2 } {}
+
+        Vec<T, 3>& operator[](size_t index)
+        {
+            assert(index < 3);
+            return col[index];
+        }
+        const Vec<T, 3>& operator[](size_t index) const
+        {
+            assert(index < 3);
+            return col[index];
+        }
+
+        Mat<T, 3, 3> operator-() const
+        {
+            return Mat<T, 3, 3>{ -data[0], -data[1], -data[2],
+                                 -data[3], -data[4], -data[5],
+                                 -data[6], -data[7], -data[8] };
+        }
+    };
+
+    template <typename T>
+    constexpr Mat<T, 3, 3> Transpose(const Mat<T, 3, 3>& mat)
+    {
+        return Mat<T, 3, 3>{
+            mat.data[0], mat.data[3], mat.data[6],
+            mat.data[1], mat.data[4], mat.data[7],
+            mat.data[2], mat.data[5], mat.data[8]
+        };
+    }
+
+    using Mat3f = Mat<float, 3, 3>;
 }
 
 

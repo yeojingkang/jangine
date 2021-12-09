@@ -14,9 +14,7 @@ protected:
         v3 = jg::Vec2f{ 5.0f, -1.0f };
     }
 
-    jg::Vec2f v1;
-    jg::Vec2f v2;
-    jg::Vec2f v3;
+    jg::Vec2f v1, v2, v3;
 };
 
 TEST_F(Vec2, Constructors)
@@ -114,9 +112,7 @@ protected:
         v3 = jg::Vec3f{ 5.0f, -1.0f, 4.0f };
     }
 
-    jg::Vec3f v1;
-    jg::Vec3f v2;
-    jg::Vec3f v3;
+    jg::Vec3f v1, v2, v3;
 };
 
 TEST_F(Vec3, Constructor)
@@ -241,9 +237,7 @@ protected:
         v3 = jg::Vec4f{ 5.0f, -1.0f, 4.0f, -3.0f };
     }
 
-    jg::Vec4f v1;
-    jg::Vec4f v2;
-    jg::Vec4f v3;
+    jg::Vec4f v1, v2, v3;
 };
 
 TEST_F(Vec4, Constructors)
