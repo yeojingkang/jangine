@@ -3,32 +3,33 @@
 
 #include <cassert> // assert
 #include <cmath> // std::sqrt
+#include <array> // std::array
 
 namespace jg
 {
     template <typename T, size_t N>
     struct Vec
     {
-        T data[N];
+        std::array<T, N> data;
 
-        explicit constexpr Vec(const T& val = T{})
+        explicit constexpr Vec(const T& val)
         {
             for (auto i = 0; i < N; ++i)
                 data[i] = val;
         }
 
-        T& operator[](size_t index)
+        constexpr T& operator[](size_t index)
         {
             assert(index < N);
             return data[index];
         }
-        const T& operator[](size_t index) const
+        constexpr const T& operator[](size_t index) const
         {
             assert(index < N);
             return data[index];
         }
 
-        Vec operator-() const
+        constexpr Vec operator-() const
         {
             auto out = *this;
             for (auto i = 0; i < N; ++i)
@@ -101,7 +102,7 @@ namespace jg
     {
         union
         {
-            T data[2];
+            std::array<T, 2> data;
             struct { T x, y; };
             struct { T u, v; };
         };
@@ -109,18 +110,18 @@ namespace jg
         explicit constexpr Vec(const T& val = T{}) : x{ val }, y{ val } {}
         explicit constexpr Vec(const T& nx, const T& ny) : x{ nx }, y{ ny } {}
 
-        T& operator[](size_t index)
+        constexpr T& operator[](size_t index)
         {
             assert(index < 2);
             return data[index];
         }
-        const T& operator[](size_t index) const
+        constexpr const T& operator[](size_t index) const
         {
             assert(index < 2);
             return data[index];
         }
 
-        Vec operator-() const { return Vec{ -x, -y }; }
+        constexpr Vec operator-() const { return Vec{ -x, -y }; }
     };
 
 
@@ -130,7 +131,7 @@ namespace jg
     {
         union
         {
-            T data[3];
+            std::array<T, 3> data;
             struct { T x, y, z; };
             struct { T u, v, w; };
             struct { T r, g, b; };
@@ -141,18 +142,18 @@ namespace jg
         explicit constexpr Vec(const T& val = T{}) : x{ val }, y{ val }, z{ val } {}
         explicit constexpr Vec(const T& nx, const T& ny, const T& nz) : x{ nx }, y{ ny }, z{ nz } {}
 
-        T& operator[](size_t index)
+        constexpr T& operator[](size_t index)
         {
             assert(index < 3);
             return data[index];
         }
-        const T& operator[](size_t index) const
+        constexpr const T& operator[](size_t index) const
         {
             assert(index < 3);
             return data[index];
         }
 
-        Vec operator-() const { return Vec{ -x, -y, -z }; }
+        constexpr Vec operator-() const { return Vec{ -x, -y, -z }; }
     };
 
     template <typename T>
@@ -172,7 +173,7 @@ namespace jg
     {
         union
         {
-            T data[4];
+            std::array<T, 4> data;
             struct { T x, y, z, w; };
             struct { T r, g, b, a; };
             Vec<T, 2> xy;
@@ -183,18 +184,18 @@ namespace jg
         explicit constexpr Vec(const T& val = T{}) : x{ val }, y{ val }, z{ val }, w{ val } {}
         explicit constexpr Vec(const T& nx, const T& ny, const T& nz, const T& nw) : x{ nx }, y{ ny }, z{ nz }, w{ nw } {}
 
-        T& operator[](size_t index)
+        constexpr T& operator[](size_t index)
         {
             assert(index < 4);
             return data[index];
         }
-        const T& operator[](size_t index) const
+        constexpr const T& operator[](size_t index) const
         {
             assert(index < 4);
             return data[index];
         }
 
-        Vec operator-() const { return Vec{ -x, -y, -z, -w }; }
+        constexpr Vec operator-() const { return Vec{ -x, -y, -z, -w }; }
     };
 
 
