@@ -44,10 +44,19 @@ TEST(Matrix, General)
         3.0f, 4.0f, 1.0f
     };
     constexpr jg::Vec3f v{ 7.0f, 2.0f, 1.0f };
-    auto out2 = m3 * v;
-    EXPECT_FLOAT_EQ(out2[0], 10.0f);
-    EXPECT_FLOAT_EQ(out2[1], 6.0f);
-    EXPECT_FLOAT_EQ(out2[2], 1.0f);
+    auto vOut = m3 * v;
+    EXPECT_FLOAT_EQ(vOut[0], 10.0f);
+    EXPECT_FLOAT_EQ(vOut[1], 6.0f);
+    EXPECT_FLOAT_EQ(vOut[2], 1.0f);
+
+    // Mat * Scalar
+    auto out2 = m1 * 2.0f;
+    EXPECT_FLOAT_EQ(out2[0][0], 2.0f);
+    EXPECT_FLOAT_EQ(out2[0][1], 4.0f);
+    EXPECT_FLOAT_EQ(out2[1][0], 6.0f);
+    EXPECT_FLOAT_EQ(out2[1][1], 8.0f);
+    EXPECT_FLOAT_EQ(out2[2][0], 10.0f);
+    EXPECT_FLOAT_EQ(out2[2][1], 12.0f);
 
     // Basic operations
     jg::Mat<float, 2, 1> m4{ 2.0f, 4.0f };
@@ -145,6 +154,7 @@ TEST_F(Mat3, Constructors)
     constexpr jg::Mat3f a;
     for (auto i = 0; i < 9; ++i)
         EXPECT_FLOAT_EQ(a.data[0], 0.0f);
+    EXPECT_FLOAT_EQ(a[0][0], 0.0f);
 
     constexpr jg::Mat3f b{
         2.0f, 7.0f, -5.0f,
@@ -160,6 +170,17 @@ TEST_F(Mat3, Constructors)
 TEST_F(Mat3, BasicOperations)
 {
     // Negate
+    constexpr jg::Mat3f cm{
+        1.0f, 2.0f, 3.0f,
+        4.0f, 5.0f, 6.0f,
+        7.0f, 8.0f, 9.0f
+    };
+    constexpr auto cneg = -cm;
+    CheckMatValues(cneg,
+        -1.0f, -2.0f, -3.0f,
+        -4.0f, -5.0f, -6.0f,
+        -7.0f, -8.0f, -9.0f);
+
     auto out = -m1;
     CheckMatValues(out,
         -5.0f, 0.0f, 0.0f,
@@ -187,12 +208,33 @@ TEST_F(Mat3, BasicOperations)
         0.0f, 5.0f, 0.0f,
         13.0f, 27.0f, 1.0f);
 
+    constexpr auto t = jg::Mat3f::Translation2D(1.0f, 2.0f);
+    constexpr auto s = jg::Mat3f::Scale2D(3.0f, 4.0f);
+    out = t * s;
+    CheckMatValues(out,
+        3.0f, 0.0f, 0.0f,
+        0.0f, 4.0f, 0.0f,
+        1.0f, 2.0f, 1.0f);
+
     // Mat * Vec
     constexpr jg::Vec3f vec{ 7.0f, 7.0f, 1.0f };
     auto vOut = m1 * vec;
     EXPECT_FLOAT_EQ(vOut[0], 38.0f);
     EXPECT_FLOAT_EQ(vOut[1], 42.0f);
     EXPECT_FLOAT_EQ(vOut[2], 1.0f);
+
+    // Mat * Scalar
+    out = m1 * 2.0f;
+    CheckMatValues(out,
+        10.0f, 0.0f, 0.0f,
+        0.0f, 10.0f, 0.0f,
+        6.0f, 14.0f, 2.0f);
+
+    out = 3.0f * m2;
+    CheckMatValues(out,
+        24.0f, 9.0f, 0.0f,
+        0.0f, 3.0f, 0.0f,
+        6.0f, 12.0f, 3.0f);
 }
 
 TEST_F(Mat3, HomogenousMatrix)
@@ -203,16 +245,22 @@ TEST_F(Mat3, HomogenousMatrix)
         0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 1.0f);
 
-    constexpr auto tran = jg::Mat3f::Translation(8.0f, 7.0f);
+    constexpr auto tran = jg::Mat3f::Translation2D(8.0f, 7.0f);
     CheckMatValues(tran,
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
         8.0f, 7.0f, 1.0f);
 
-    constexpr auto scale = jg::Mat3f::Scale(-9.0f, 3.0f);
+    constexpr auto scale = jg::Mat3f::Scale2D(-9.0f, 3.0f);
     CheckMatValues(scale,
         -9.0f, 0.0f, 0.0f,
         0.0f, 3.0f, 0.0f,
+        0.0f, 0.0f, 1.0f);
+
+    auto rot = jg::Mat3f::Rotation2D(0.5f * jg::HALF_PI);
+    CheckMatValues(rot,
+        0.7071067812f, 0.7071067812f, 0.0f,
+        -0.7071067812f, 0.7071067812f, 0.0f,
         0.0f, 0.0f, 1.0f);
 }
 
@@ -234,4 +282,33 @@ TEST_F(Mat3, Transpose)
     EXPECT_FLOAT_EQ(transposed[2][0], 3.0f);
     EXPECT_FLOAT_EQ(transposed[2][1], 6.0f);
     EXPECT_FLOAT_EQ(transposed[2][2], 9.0f);
+}
+
+TEST_F(Mat3, Determinant)
+{
+    constexpr auto det1 = jg::Determinant(jg::Mat3f::Identity());
+    EXPECT_FLOAT_EQ(det1, 1.0f);
+
+    constexpr auto det2 = jg::Determinant(jg::Mat3f::Scale2D(2.0f, 3.0f));
+    EXPECT_FLOAT_EQ(det2, 6.0f);
+
+    EXPECT_FLOAT_EQ(jg::Determinant(m1), 25.0f);
+    EXPECT_FLOAT_EQ(jg::Determinant(m2), 8.0f);
+}
+
+TEST_F(Mat3, Inverse)
+{
+    constexpr jg::Mat3f s = jg::Mat3f::Scale2D(2.0f, 4.0f);
+    const auto si = jg::Inverse(s);
+    CheckMatValues(si,
+        0.5f, 0.0f, 0.0f,
+        0.0f, 0.25f, 0.0f,
+        0.0f, 0.0f, 1.0f);
+
+    constexpr jg::Mat3f t = jg::Mat3f::Translation2D(3.0f, 1.0f);
+    const auto ti = jg::Inverse(t);
+    CheckMatValues(ti,
+        1.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f,
+        -3.0f, -1.0f, 1.0f);
 }

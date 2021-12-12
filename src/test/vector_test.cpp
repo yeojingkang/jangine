@@ -27,7 +27,7 @@ TEST_F(Vec2, Constructors)
     EXPECT_FLOAT_EQ(b.x, 1.0f);
     EXPECT_FLOAT_EQ(b.y, 1.0f);
 
-    jg::Vec2f c{ 2.0f, -3.0f };
+    constexpr jg::Vec2f c{ 2.0f, -3.0f };
     EXPECT_FLOAT_EQ(c[0], 2.0f);
     EXPECT_FLOAT_EQ(c[1], -3.0f);
 }
@@ -35,6 +35,11 @@ TEST_F(Vec2, Constructors)
 TEST_F(Vec2, BasicOperations)
 {
     // Negate
+    constexpr jg::Vec2f cv{ 1.0f, 2.0f };
+    constexpr auto cneg = -cv;
+    EXPECT_FLOAT_EQ(cneg.x, -1.0f);
+    EXPECT_FLOAT_EQ(cneg.y, -2.0f);
+
     auto out = -v2;
     EXPECT_FLOAT_EQ(out.x, -2.0f);
     EXPECT_FLOAT_EQ(out.y, -2.0f);
@@ -127,7 +132,7 @@ TEST_F(Vec3, Constructor)
     EXPECT_FLOAT_EQ(b.y, 1.0f);
     EXPECT_FLOAT_EQ(b.z, 1.0f);
 
-    jg::Vec3f c{ 2.0f, -3.0f, 4.0f };
+    constexpr jg::Vec3f c{ 2.0f, -3.0f, 4.0f };
     EXPECT_FLOAT_EQ(c[0], 2.0f);
     EXPECT_FLOAT_EQ(c[1], -3.0f);
     EXPECT_FLOAT_EQ(c[2], 4.0f);
@@ -136,6 +141,12 @@ TEST_F(Vec3, Constructor)
 TEST_F(Vec3, BasicOperations)
 {
     // Negate
+    constexpr jg::Vec3f cv{ 1.0f, 2.0f, 3.0f };
+    constexpr auto cneg = -cv;
+    EXPECT_FLOAT_EQ(cneg.x, -1.0f);
+    EXPECT_FLOAT_EQ(cneg.y, -2.0f);
+    EXPECT_FLOAT_EQ(cneg.z, -3.0f);
+
     auto out = -v2;
     EXPECT_FLOAT_EQ(out.x, -2.0f);
     EXPECT_FLOAT_EQ(out.y, -2.0f);
@@ -254,7 +265,7 @@ TEST_F(Vec4, Constructors)
     EXPECT_FLOAT_EQ(b.z, 1.0f);
     EXPECT_FLOAT_EQ(b.w, 1.0f);
 
-    jg::Vec4f c{ 2.0f, -3.0f, 4.0f, -5.0f };
+    constexpr jg::Vec4f c{ 2.0f, -3.0f, 4.0f, -5.0f };
     EXPECT_FLOAT_EQ(c[0], 2.0f);
     EXPECT_FLOAT_EQ(c[1], -3.0f);
     EXPECT_FLOAT_EQ(c[2], 4.0f);
@@ -264,6 +275,13 @@ TEST_F(Vec4, Constructors)
 TEST_F(Vec4, BasicOperations)
 {
     // Negate
+    constexpr jg::Vec4f cv{ 1.0f, 2.0f, 3.0f, 4.0f };
+    constexpr auto cneg = -cv;
+    EXPECT_FLOAT_EQ(cneg.x, -1.0f);
+    EXPECT_FLOAT_EQ(cneg.y, -2.0f);
+    EXPECT_FLOAT_EQ(cneg.z, -3.0f);
+    EXPECT_FLOAT_EQ(cneg.w, -4.0f);
+
     auto out = -v2;
     EXPECT_FLOAT_EQ(out.x, -2.0f);
     EXPECT_FLOAT_EQ(out.y, -2.0f);
