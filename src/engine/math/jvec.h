@@ -5,6 +5,8 @@
 #include <cmath> // std::sqrt
 #include <array> // std::array
 
+#include "jtypes.h"
+
 namespace jg
 {
     template <typename T, size_t N>
@@ -201,9 +203,9 @@ namespace jg
 
 
     // Aliases
-    using Vec2f = Vec<float, 2>;
-    using Vec3f = Vec<float, 3>;
-    using Vec4f = Vec<float, 4>;
+    using Vec2f = Vec<f32, 2>;
+    using Vec3f = Vec<f32, 3>;
+    using Vec4f = Vec<f32, 4>;
 }
 
 #endif // J_VEC_H

@@ -6,6 +6,7 @@
 #include <array> // std::array
 #include <initializer_list> // std::initializer_list
 
+#include "jtypes.h"
 #include "jvec.h"
 #include "jmath_consts.h"
 
@@ -129,7 +130,7 @@ namespace jg
                 static_cast<T>(0), static_cast<T>(0), static_cast<T>(1)
             };
         }
-        static constexpr Mat Translation(const T& x, const T& y)
+        static constexpr Mat Translation2D(const T& x, const T& y)
         {
             return Mat{
                 static_cast<T>(1), static_cast<T>(0), static_cast<T>(0),
@@ -137,7 +138,7 @@ namespace jg
                                 x,                 y, static_cast<T>(1)
             };
         }
-        static constexpr Mat Scale(const T& x, const T& y)
+        static constexpr Mat Scale2D(const T& x, const T& y)
         {
             return Mat{
                                 x, static_cast<T>(0), static_cast<T>(0),
@@ -145,7 +146,7 @@ namespace jg
                 static_cast<T>(0), static_cast<T>(0), static_cast<T>(1)
             };
         }
-        static Mat Rotation(const T& rad)
+        static Mat Rotation2D(const T& rad)
         {
             const auto sinRad = std::sin(rad);
             const auto cosRad = std::cos(rad);
@@ -205,7 +206,7 @@ namespace jg
     constexpr Mat<T, 3, 3> Inverse(const Mat<T, 3, 3>& mat)
     {
         const auto det = Determinant(mat);
-        assert(std::abs(det) > static_cast<T>(EPSILON));
+        assert(std::abs(det) > static_cast<T>(EPSILON_F32));
 
         /*
          * Each element is the determinant of each minor 2x2 matrix of the transposed matrix
@@ -243,7 +244,7 @@ namespace jg
 
 
 
-    using Mat3f = Mat<float, 3, 3>;
+    using Mat3f = Mat<f32, 3, 3>;
 }
 
 
