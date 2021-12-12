@@ -208,8 +208,8 @@ TEST_F(Mat3, BasicOperations)
         0.0f, 5.0f, 0.0f,
         13.0f, 27.0f, 1.0f);
 
-    constexpr auto t = jg::Mat3f::Translation(1.0f, 2.0f);
-    constexpr auto s = jg::Mat3f::Scale(3.0f, 4.0f);
+    constexpr auto t = jg::Mat3f::Translation2D(1.0f, 2.0f);
+    constexpr auto s = jg::Mat3f::Scale2D(3.0f, 4.0f);
     out = t * s;
     CheckMatValues(out,
         3.0f, 0.0f, 0.0f,
@@ -245,19 +245,19 @@ TEST_F(Mat3, HomogenousMatrix)
         0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 1.0f);
 
-    constexpr auto tran = jg::Mat3f::Translation(8.0f, 7.0f);
+    constexpr auto tran = jg::Mat3f::Translation2D(8.0f, 7.0f);
     CheckMatValues(tran,
         1.0f, 0.0f, 0.0f,
         0.0f, 1.0f, 0.0f,
         8.0f, 7.0f, 1.0f);
 
-    constexpr auto scale = jg::Mat3f::Scale(-9.0f, 3.0f);
+    constexpr auto scale = jg::Mat3f::Scale2D(-9.0f, 3.0f);
     CheckMatValues(scale,
         -9.0f, 0.0f, 0.0f,
         0.0f, 3.0f, 0.0f,
         0.0f, 0.0f, 1.0f);
 
-    auto rot = jg::Mat3f::Rotation(0.5f * jg::HALF_PI);
+    auto rot = jg::Mat3f::Rotation2D(0.5f * jg::HALF_PI);
     CheckMatValues(rot,
         0.7071067812f, 0.7071067812f, 0.0f,
         -0.7071067812f, 0.7071067812f, 0.0f,
@@ -289,7 +289,7 @@ TEST_F(Mat3, Determinant)
     constexpr auto det1 = jg::Determinant(jg::Mat3f::Identity());
     EXPECT_FLOAT_EQ(det1, 1.0f);
 
-    constexpr auto det2 = jg::Determinant(jg::Mat3f::Scale(2.0f, 3.0f));
+    constexpr auto det2 = jg::Determinant(jg::Mat3f::Scale2D(2.0f, 3.0f));
     EXPECT_FLOAT_EQ(det2, 6.0f);
 
     EXPECT_FLOAT_EQ(jg::Determinant(m1), 25.0f);
@@ -298,14 +298,14 @@ TEST_F(Mat3, Determinant)
 
 TEST_F(Mat3, Inverse)
 {
-    constexpr jg::Mat3f s = jg::Mat3f::Scale(2.0f, 4.0f);
+    constexpr jg::Mat3f s = jg::Mat3f::Scale2D(2.0f, 4.0f);
     const auto si = jg::Inverse(s);
     CheckMatValues(si,
         0.5f, 0.0f, 0.0f,
         0.0f, 0.25f, 0.0f,
         0.0f, 0.0f, 1.0f);
 
-    constexpr jg::Mat3f t = jg::Mat3f::Translation(3.0f, 1.0f);
+    constexpr jg::Mat3f t = jg::Mat3f::Translation2D(3.0f, 1.0f);
     const auto ti = jg::Inverse(t);
     CheckMatValues(ti,
         1.0f, 0.0f, 0.0f,
