@@ -10,6 +10,9 @@
 #include "jvec.h"
 #include "jmath_consts.h"
 
+// Disable warning for nameless struct/union
+#pragma warning(disable:4201)
+
 namespace jg
 {
     template <typename T, size_t M, size_t N>
@@ -53,7 +56,7 @@ namespace jg
     Mat<T, M, N> operator+(const Mat<T, M, N>& lhs, const Mat<T, M, N>& rhs)
     {
         auto ret = lhs;
-        for (auto i = 0; i < M * N; ++i)
+        for (auto i = 0u; i < M * N; ++i)
             ret.data[i] += rhs.data[i];
         return ret;
     }
@@ -65,9 +68,9 @@ namespace jg
     Mat<T, M, K> operator*(const Mat<T, M, N>& lhs, const Mat<T, N, K>& rhs)
     {
         Mat<T, M, K> ret;
-        for (auto i = 0; i < K; ++i)
-            for (auto j = 0; j < M; ++j)
-                for (auto k = 0; k < N; ++k)
+        for (auto i = 0u; i < K; ++i)
+            for (auto j = 0u; j < M; ++j)
+                for (auto k = 0u; k < N; ++k)
                     ret[i][j] += lhs[k][j] * rhs[i][k];
         return ret;
     }
@@ -76,8 +79,8 @@ namespace jg
     Vec<T, M> operator*(const Mat<T, M, N>& lhs, const Vec<T, N>& rhs)
     {
         Vec<T, M> ret;
-        for (auto i = 0; i < M; ++i)
-            for (auto j = 0; j < N; ++j)
+        for (auto i = 0u; i < M; ++i)
+            for (auto j = 0u; j < N; ++j)
                 ret[i] += lhs[j][i] * rhs[j];
         return ret;
     }
@@ -86,7 +89,7 @@ namespace jg
     Mat<T, M, N> operator*(const Mat<T, M, N>& lhs, const T& rhs)
     {
         auto ret = lhs;
-        for (auto i = 0; i < N; ++i)
+        for (auto i = 0u; i < N; ++i)
             for (auto j = 0; j < M; ++j)
                 ret[i][j] *= rhs;
         return ret;
@@ -99,7 +102,7 @@ namespace jg
     Mat<T, M, M> Transpose(const Mat<T, M, M>& mat)
     {
         auto transposed = mat;
-        for (auto i = 0; i < M; ++i)
+        for (auto i = 0u; i < M; ++i)
             for (auto j = i + 1; j < M; ++j)
                 std::swap(transposed[i][j], transposed[j][i]);
         return transposed;

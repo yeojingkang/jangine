@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
 # Set the project name
 project(jangine)
@@ -46,9 +46,17 @@ endif()
 # Add unit tests
 enable_testing()
 add_executable(UnitTest
-    "src/test/vector_test.cpp"
-    "src/test/matrix_test.cpp"
-    "src/test/math_test.cpp"
+ "src/test/vector_test.cpp"
+ "src/test/matrix_test.cpp"
+ "src/test/math_test.cpp"
+ "src/test/director_test.cpp"
 )
-target_link_libraries(UnitTest PUBLIC gtest_main jangine)
+target_link_libraries(UnitTest PRIVATE gtest_main jangine)
+
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    target_compile_options(UnitTest PRIVATE /W4 /WX)
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    target_compile_options(UnitTest PRIVATE -Wall -Wextra -Werror)
+endif()
+
 add_test(NAME Unit_Test COMMAND UnitTest)

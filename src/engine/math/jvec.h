@@ -4,8 +4,12 @@
 #include <cassert> // assert
 #include <cmath> // std::sqrt
 #include <array> // std::array
+#include <numeric> // std::inner_product
 
 #include "jtypes.h"
+
+// Disable warning for nameless struct/union
+#pragma warning(disable:4201)
 
 namespace jg
 {
@@ -34,7 +38,7 @@ namespace jg
         constexpr Vec operator-() const
         {
             auto out = *this;
-            for (auto i = 0; i < N; ++i)
+            for (auto i = 0u; i < N; ++i)
                 out.data[i] = -out.data[i];
             return out;
         }
@@ -44,7 +48,7 @@ namespace jg
     Vec<T, N> operator+(const Vec<T, N>& lhs, const Vec<T, N>& rhs)
     {
         auto ret = lhs;
-        for (auto i = 0; i < N; ++i)
+        for (auto i = 0u; i < N; ++i)
             ret.data[i] += rhs.data[i];
         return ret;
     }
@@ -59,7 +63,7 @@ namespace jg
     Vec<T, N> operator*(const Vec<T, N>& lhs, const T& rhs)
     {
         auto ret = lhs;
-        for (auto i = 0; i < N; ++i)
+        for (auto i = 0u; i < N; ++i)
             ret.data[i] *= rhs;
         return ret;
     }
@@ -74,7 +78,7 @@ namespace jg
     Vec<T, N> operator/(const Vec<T, N>& lhs, const T& rhs)
     {
         auto ret = lhs;
-        for (auto i = 0; i < N; ++i)
+        for (auto i = 0u; i < N; ++i)
             ret.data[i] /= rhs;
         return ret;
     }
@@ -82,10 +86,11 @@ namespace jg
     template <typename T, size_t N>
     T Dot(const Vec<T, N>& lhs, const Vec<T, N>& rhs)
     {
-        auto ret = T{};
-        for (auto i = 0; i < N; ++i)
-            ret += lhs.data[i] * rhs.data[i];
-        return ret;
+        return std::inner_product(
+            std::cbegin(lhs.data), std::cend(lhs.data),
+            std::cbegin(rhs.data),
+            T{}
+        );
     }
 
     template <typename T, size_t N>
