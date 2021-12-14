@@ -18,7 +18,7 @@ TEST(Matrix, General)
     EXPECT_FLOAT_EQ(a[1][0], 0.0f);
 
     constexpr jg::Mat<float, 2, 3> b;
-    for (auto i = 0; i < 6; ++i)
+    for (auto i = 0u; i < 6u; ++i)
         EXPECT_FLOAT_EQ(b.data[i], 0.0f);
 
     // Mat * Mat
