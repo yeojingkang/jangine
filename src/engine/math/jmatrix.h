@@ -11,7 +11,9 @@
 #include "jmath_consts.h"
 
 // Disable warning for nameless struct/union
-#pragma warning(disable:4201)
+#if defined(_WIN32) | defined(_WIN64)
+    #pragma warning(disable:4201)
+#endif
 
 namespace jg
 {
@@ -46,7 +48,7 @@ namespace jg
         constexpr Mat operator-() const
         {
             auto ret = *this;
-            for (auto i = 0; i < M * N; ++i)
+            for (auto i = 0u; i < M * N; ++i)
                 ret.data[i] = -ret.data[i];
             return ret;
         }
@@ -90,7 +92,7 @@ namespace jg
     {
         auto ret = lhs;
         for (auto i = 0u; i < N; ++i)
-            for (auto j = 0; j < M; ++j)
+            for (auto j = 0u; j < M; ++j)
                 ret[i][j] *= rhs;
         return ret;
     }

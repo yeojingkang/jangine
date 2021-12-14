@@ -9,7 +9,9 @@
 #include "jtypes.h"
 
 // Disable warning for nameless struct/union
-#pragma warning(disable:4201)
+#if defined(_WIN32) | defined(_WIN64)
+    #pragma warning(disable:4201)
+#endif
 
 namespace jg
 {
