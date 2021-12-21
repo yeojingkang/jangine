@@ -5,5 +5,5 @@
 TEST(Director, Director)
 {
     jg::Director director;
-    director.foo();
+    director.Init();
 }
