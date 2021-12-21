@@ -7,9 +7,7 @@ namespace jg
     class Director
     {
     public:
-        Director();
-
-        void foo(); // TODO: REMOVE
+        void Init();
     };
 }
 

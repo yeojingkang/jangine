@@ -4,8 +4,8 @@
 
 namespace jg
 {
-    Director::Director(){}
-
-     // TODO: REMOVE
-    void Director::foo() { std::cout << "Calling Director::foo()..." << std::endl; }
+    void Director::Init()
+    {
+        std::cout << "PLS IMPLEMENT Director::Init()" << std::endl;
+    }
 }
